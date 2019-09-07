@@ -1,3 +1,4 @@
+// Model de usuários
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
 
@@ -15,6 +16,7 @@ class User extends Model {
         sequelize,
       }
     );
+    // hook que aciona função que criptografa a senha
     this.addHook('beforeSave', async user => {
       if (user.password) {
         user.password_hash = await bcrypt.hash(user.password, 8);
@@ -23,7 +25,12 @@ class User extends Model {
     return this;
   }
 
+  static associate(models) {
+    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
+  }
+
   checkPassword(password) {
+    // checagem para validação do usuário numa sessão
     return bcrypt.compare(password, this.password_hash);
   }
 }

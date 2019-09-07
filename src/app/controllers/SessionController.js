@@ -1,3 +1,10 @@
+/* 
+***Controller de Sessões***
+Autentica a sessão de um usuário cadastrado
+
+jwt cria um token criptografado
+yup cria um esquema que assegura que os dados foram preenchidos no formato correto
+*/
 import jwt from 'jsonwebtoken';
 import * as Yup from 'yup';
 
